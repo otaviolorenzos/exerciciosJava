@@ -1,12 +1,12 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class sistemaDeVendas {
+public class SistemaDeVendas {
 
 
     public static void main(String[] args) {
         String[] produtos = {"Mouse", "Teclado", "Monitor", "Webcam", "Headset"};
-        Double[] precoProdutos = {29.9, 79.5, 899.2, 137.45, 119.9};
+        Double[] precosProdutos = {29.9, 79.5, 899.2, 137.45, 119.9};
         int [] estoqueProdutos = {5, 7, 9, 4, 8};
         Scanner sc = new Scanner(System.in);
 
@@ -18,21 +18,21 @@ public class sistemaDeVendas {
         while (continuarComprando) {
             try {
                 for (int i = 0; i<produtos.length; i++) {
-                    System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)", i+1, produtos[i], precoProdutos[i], estoqueProdutos[i]));
+                    System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)", i+1, produtos[i], precosProdutos[i], estoqueProdutos[i]));
                 }
 
                 System.out.println("----Qual item você deseja comprar? escolha de acordo com o nº dentro de []----:");
-                int itemComprar = sc.nextInt();
+                int itemAComprar = sc.nextInt();
 
-                if (itemComprar > 0 && itemComprar < 6) {
-                    System.out.println("Perfeito, temos " + estoqueProdutos[itemComprar-1] + " unidades disponiveis de " + produtos[itemComprar-1]);
+                if (itemAComprar > 0 && itemAComprar < 6) {
+                    System.out.println("Perfeito, temos " + estoqueProdutos[itemAComprar-1] + " unidades disponiveis de " + produtos[itemAComprar-1]);
                     System.out.println("Quantas unidades você gostaria?");
                     int unidades = sc.nextInt();
-                    if (unidades > 0 && unidades < estoqueProdutos[itemComprar-1]) {
-                        carrinho = carrinho + (precoProdutos[itemComprar-1]*unidades);
-                        System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, produtos[itemComprar-1]));
+                    if (unidades > 0 && unidades < estoqueProdutos[itemAComprar-1]) {
+                        carrinho = carrinho + (precosProdutos[itemAComprar-1]*unidades);
+                        System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, produtos[itemAComprar-1]));
                         System.out.println(String.format("Valor total: R$%.2f", carrinho));
-                        estoqueProdutos[itemComprar-1] = estoqueProdutos[itemComprar-1] - unidades;
+                        estoqueProdutos[itemAComprar-1] = estoqueProdutos[itemAComprar-1] - unidades;
                     } else {
                         System.out.println("Não temos esta quantidade disponivel, tente novamente.");
                     }
