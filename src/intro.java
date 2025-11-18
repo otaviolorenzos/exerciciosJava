@@ -1,5 +1,5 @@
 /* este projeto tem como objetivo usar IA para criar exercios onde posso praticar a linguagem JAVA
-e Git. Os exercicios são criado pelo Google Gemini e indicarei aqui o conteúdo
+e Git. Os exercicios são criados pelo Google Gemini e indicarei aqui o conteúdo
 
 <desafio1>
 
