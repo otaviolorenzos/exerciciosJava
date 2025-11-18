@@ -1,7 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class SistemaDeVendas {
+public class VersaoUm {
 
 
     public static void main(String[] args) {
@@ -17,8 +17,8 @@ public class SistemaDeVendas {
         boolean continuarComprando = true;
         while (continuarComprando) {
             try {
-                for (int i = 0; i<produtos.length; i++) {
-                    System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)", i+1, produtos[i], precosProdutos[i], estoqueProdutos[i]));
+                for (int i = 0; i < produtos.length; i++) {
+                    System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)", i + 1, produtos[i], precosProdutos[i], estoqueProdutos[i]));
                 }
 
                 System.out.println("----Qual item você deseja comprar? escolha de acordo com o nº dentro de []----:");
