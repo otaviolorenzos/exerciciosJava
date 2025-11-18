@@ -1,7 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class sitemaDeVendas {
+public class sistemaDeVendas {
 
 
     public static void main(String[] args) {
@@ -20,6 +20,7 @@ public class sitemaDeVendas {
                 for (int i = 0; i<produtos.length; i++) {
                     System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)", i+1, produtos[i], precoProdutos[i], estoqueProdutos[i]));
                 }
+
                 System.out.println("----Qual item você deseja comprar? escolha de acordo com o nº dentro de []----:");
                 int itemComprar = sc.nextInt();
 
@@ -31,6 +32,7 @@ public class sitemaDeVendas {
                         carrinho = carrinho + (precoProdutos[itemComprar-1]*unidades);
                         System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, produtos[itemComprar-1]));
                         System.out.println(String.format("Valor total: R$%.2f", carrinho));
+                        estoqueProdutos[itemComprar-1] = estoqueProdutos[itemComprar-1] - unidades;
                     } else {
                         System.out.println("Não temos esta quantidade disponivel, tente novamente.");
                     }
@@ -56,9 +58,49 @@ public class sitemaDeVendas {
                 sc.next();
             }
         }
+        boolean pago = false;
+        while (!pago) {
+            try {
+                int pagamento = 0;
+                Double carrinhoAlterado = 0.0;
+                System.out.println("Qual o método de pagamento? ");
+                System.out.println("[1] - PIX/DÉBITO >> 10% de Desconto.");
+                System.out.println("[2] - CRÉDITO");
+                System.out.println("[3] - BOLETO >> 5% de Acréscimo");
+                System.out.println("Escolha um nº entre []: ");
+                pagamento = sc.nextInt();
+                System.out.println("Valor do carrinho: R$" + carrinho);
+                switch (pagamento) {
+                    case 1: //10%
+                        double desconto = carrinho * 0.1;
+                        carrinhoAlterado = carrinho - desconto;
+                        System.out.println("Total de desconto (10%): R$"+ desconto);
+                        System.out.println("Total com o desconto aplicado: R$"+ carrinhoAlterado);
+                        pago = true;
+                        break;
+                    case 2: // sem desconto
+                        System.out.println("Valor final é o mesmo.");
+                        pago = true;
+                        break;
+                    case 3: // 5%+
+                        double acrescimo = carrinho * 0.05;
+                        carrinhoAlterado = carrinho + acrescimo;
+                        System.out.println("Total de acréscimo (5%): R$"+ acrescimo);
+                        System.out.println("Total com o acréscimo aplicado: R$"+ carrinhoAlterado);
+                        pago = true;
+                        break;
+                    default:
+                        System.out.println("Método inválido, Por favor: digite um índice entre 1 e 3");
+                }
 
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, digite um ídice entre 1 e 3");
+                sc.next();
+            }
 
-
+        }
+        System.out.println("Você receberá um e-mail com as instruções de pagamento.");
+        System.out.println("Muito obrigado por comprar da OLS Sistemas!");
     }
 
 }
