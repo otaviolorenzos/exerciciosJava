@@ -33,4 +33,29 @@ public class Produtos {
         return valorNoCarrinho;
     }
 
+    public  static boolean respotaContinuarComprando (int resposta) {
+        if (resposta == 2) {
+            return true;
+        } else if (resposta == 1) {
+            return false;
+        } else {
+            throw new RuntimeException("Número Inválido, tente novamente.");
+        }
+    }
+
+    public double calcularPagamento (int opcao, double valorNoCarrinho) {
+        switch (opcao) {
+            case 1: //10%
+                valorNoCarrinho =  valorNoCarrinho - (valorNoCarrinho * 0.1);
+                break;
+            case 2: // sem alteração
+                break;
+            case 3: // 5%+
+                valorNoCarrinho = valorNoCarrinho + (valorNoCarrinho * 0.05);
+                break;
+            default:
+                throw new RuntimeException("Número Inválido, tente novamente.");
+        }
+        return valorNoCarrinho;
+    }
 }
