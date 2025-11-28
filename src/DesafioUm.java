@@ -10,7 +10,7 @@ de uma compra, aplica descontos e trata o inventário.
 Src:
 SistemaDeVendas
 
-Sugestões de melhoria do Gemini para Versão Final 1:
+Sugestões de melhoria do Gemini para VersãoUm:
 
 1. Robustez do Tratamento de Erros
 O try-catch só está envolvendo a leitura de itemComprar. Se a exceção ocorrer dentro da leitura de unidades ou
@@ -23,13 +23,34 @@ O padrão de convenção de nomes em Java (Convenção Code Conventions for the 
 Classes: Devem ser em PascalCase (iniciadas com letra maiúscula).
 Variáveis: Devem ser em camelCase (iniciadas com letra minúscula e próximas palavras com maiúscula).
 
-3. Modularização (Preparação para o Desafio Nível 3)
+3. Modularização (Preparação para o Desafio Nível 2)
 O método main está fazendo muitas coisas: exibindo produtos, gerenciando o loop de compra, tratando exceções e aplicando o pagamento.
 O princípio da boa programação é: "Um método deve fazer apenas uma coisa."
 Como Melhorar:
 Crie métodos estáticos para isolar as lógicas
 
 <DesafioUm>
+
+<DesafioDois>
+Sugestões de melhoria do Gemini para VersãoDois:
+
+Sugestões de Polimento (Refatoração de Elite)
+1. Simplificação da Lógica do while no main
+Você usa a variável numValido três vezes com lógicas de repetição aninhadas diferentes, o que pode ser confuso.
+
+Problema na Compra: O loop para itemAComprar e unidades pode ser combinado em um único loop mais limpo.
+
+Melhoria (Usando do-while): Use o do-while para cada validação. O do-while é ideal porque executa o código primeiro e só
+repete se a condição for falsa (se a validação falhar).
+
+2. Tratamento de Exceções Lógicas em Produtos
+Na classe Produtos, seus métodos AnalisarSeExisteP, VerificarEstoque, etc., apenas usam System.out.println e retornam true/false.
+
+Problema: Se você quiser que o programa pare de executar uma linha de código, você precisa de um controle de fluxo mais forte.
+
+Melhoria (Retorno ao Padrão de Exceção): Use o padrão lançar exceção para erros lógicos críticos (como fizemos antes com RuntimeException):
+
+<DesafioDois>
 
  */
 

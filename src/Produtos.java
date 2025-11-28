@@ -1,8 +1,25 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Produtos {
-    String[] produtos = {"Mouse", "Teclado", "Monitor", "Webcam", "Headset"};
-    Double[] precosProdutos = {29.9, 79.5, 899.2, 137.45, 119.9};
-    int[] estoqueProdutos = {5, 7, 9, 4, 8};
-    Double valorNoCarrinho = 0.0;
+    private String[] produtos = {"Mouse", "Teclado", "Monitor", "Webcam", "Headset"};
+    private Double[] precosProdutos = {29.9, 79.5, 899.2, 137.45, 119.9};
+    private int[] estoqueProdutos = {5, 7, 9, 4, 8};
+    private Double valorNoCarrinho = 0.0;
+
+    public double getValorNoCarrinho() {
+        return this.valorNoCarrinho;
+    }
+    public int[] getEtoqueProdutos() {
+        return this.estoqueProdutos;
+    }
+    public Double[] getPrecosProdutos() {
+        return this.precosProdutos;
+    }
+    public String [] getProdutos (){
+        return  this.produtos;
+    }
+
 
     public void ExibirInventario() {
         System.out.println("------------- PRODUTOS -------------");
@@ -12,19 +29,22 @@ public class Produtos {
         System.out.println("------------- PRODUTOS -------------");
     }
 
-    public int AnalisarSeExisteP(int itemAComprar){
+    public boolean AnalisarSeExisteP(int itemAComprar){  //Analisa de está fora do intervalo de produtos
         if (itemAComprar <= 0 || itemAComprar > produtos.length) {
-            throw new RuntimeException("Número Inválido, tente novamente.");
-        } return itemAComprar;
+            System.out.println("Número Inválido, tente novamente.");
+            return false;
+        } return true;
     }
 
     public boolean VerificarEstoque(int unidades, int itemAComprar){
         if (unidades > estoqueProdutos[itemAComprar-1]){
-            throw new RuntimeException("Estoque indisponível para quantidade desejada, tente novamente.");
+            System.out.println("Estoque indisponível para quantidade desejada, tente novamente.");
+            return true;
         } else if (unidades < 0){
-            throw new RuntimeException("Número inválido, tente novamente.");
+            System.out.println("Número inválido, tente novamente.");
+            return true;
         }
-        return true;
+        return false;
     }
 
     public Double AddAoCarrinho(int itemAComprar, int unidades, Produtos p){
@@ -39,23 +59,32 @@ public class Produtos {
         } else if (resposta == 1) {
             return false;
         } else {
-            throw new RuntimeException("Número Inválido, tente novamente.");
+            System.out.println("Número Inválido, tente novamente.");
+            return true;
         }
     }
 
     public double calcularPagamento (int opcao, double valorNoCarrinho) {
-        switch (opcao) {
-            case 1: //10%
-                valorNoCarrinho =  valorNoCarrinho - (valorNoCarrinho * 0.1);
-                break;
-            case 2: // sem alteração
-                break;
-            case 3: // 5%+
+            if (opcao == 1) {
+                valorNoCarrinho = valorNoCarrinho - (valorNoCarrinho * 0.1);
+            } else if (opcao == 2){
+                System.out.println("Sem Alterações.");
+            } else if (opcao == 3) {
                 valorNoCarrinho = valorNoCarrinho + (valorNoCarrinho * 0.05);
-                break;
-            default:
-                throw new RuntimeException("Número Inválido, tente novamente.");
-        }
+            } else {
+                System.out.println("Número Inválido, tente novamente.");
+            }
+
         return valorNoCarrinho;
     }
+
+    public  boolean  avaliarQualPagamento (int opcao){
+        if (opcao < 1 || opcao > 3) {
+            System.out.println("Número Inválido, tente novamente.");
+            return false;
+        } return true;
+    }
+
+
+
 }
