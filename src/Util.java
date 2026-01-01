@@ -2,7 +2,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Util {
-    public static int lerInteiroValido(Scanner sc, String mensagem) {
+    public static int lerInteiroValido(Scanner sc, String mensagem) { // para todos as entradas inteiras
         int numeroLido = 0;
         boolean entradaValida = false;
         while (!entradaValida) {

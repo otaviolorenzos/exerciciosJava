@@ -1,59 +1,96 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Produtos {
-    private String[] produtos = {"Mouse", "Teclado", "Monitor", "Webcam", "Headset"};
-    private Double[] precosProdutos = {29.9, 79.5, 899.2, 137.45, 119.9};
-    private int[] estoqueProdutos = {5, 7, 9, 4, 8};
+    private ArrayList<String> produtos = new ArrayList<>(); // uma lista que não tem tamanho fixo
+    private ArrayList<Double> precosProdutos = new ArrayList<>();
+    private ArrayList<Integer> estoqueProdutos = new ArrayList<>();
     private Double valorNoCarrinho = 0.0;
+
+    public Produtos () {
+        this.produtos.add("Mouse");
+        this.precosProdutos.add(29.9);
+        this.estoqueProdutos.add(5);
+
+        this.produtos.add("Teclado");
+        this.precosProdutos.add(79.5);
+        this.estoqueProdutos.add(7);
+
+        this.produtos.add("Monitor");
+        this.precosProdutos.add(899.2);
+        this.estoqueProdutos.add(9);
+
+        this.produtos.add("Webcam");
+        this.precosProdutos.add(137.45);
+        this.estoqueProdutos.add(4);
+
+        this.produtos.add("Headset");
+        this.precosProdutos.add(119.9);
+        this.estoqueProdutos.add(8);
+
+    }
 
     public double getValorNoCarrinho() {
         return this.valorNoCarrinho;
     }
-    public int[] getEtoqueProdutos() {
+    public ArrayList<Integer> getEtoqueProdutos() {
         return this.estoqueProdutos;
     }
-    public Double[] getPrecosProdutos() {
+
+    public ArrayList<Double> getPrecosProdutos() {
         return this.precosProdutos;
     }
-    public String [] getProdutos (){
-        return  this.produtos;
+
+    public String getNomeProdutoIndividual(int indice) {
+        return this.produtos.get(indice - 1);
+    }
+
+
+    public int getEstoqueIndividual(int indice) {
+        return this.estoqueProdutos.get(indice - 1);
     }
 
 
     public void ExibirInventario() {
         System.out.println("------------- PRODUTOS -------------");
-        for (int i = 0; i < produtos.length; i++) {
-            System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)", i + 1, produtos[i], precosProdutos[i], estoqueProdutos[i]));
+        for (int i = 0; i < produtos.size(); i++) {
+            System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)",
+                    i + 1,
+                    produtos.get(i),
+                    precosProdutos.get(i),
+                    estoqueProdutos.get(i)));
         }
         System.out.println("------------- PRODUTOS -------------");
     }
 
     public boolean AnalisarSeExisteP(int itemAComprar){  //Analisa de está fora do intervalo de produtos
-        if (itemAComprar <= 0 || itemAComprar > produtos.length) {
+        if (itemAComprar <= 0 || itemAComprar > produtos.size()) {
             System.out.println("Número Inválido, tente novamente.");
             return false;
         } return true;
     }
 
     public boolean VerificarEstoque(int unidades, int itemAComprar){
-        if (unidades > estoqueProdutos[itemAComprar-1]){
+        if (unidades > estoqueProdutos.get(itemAComprar-1)){
             System.out.println("Estoque indisponível para quantidade desejada, tente novamente.");
             return true;
-        } else if (unidades < 0){
+        } else if (unidades <= 0){
             System.out.println("Número inválido, tente novamente.");
             return true;
         }
         return false;
     }
 
-    public Double AddAoCarrinho(int itemAComprar, int unidades, Produtos p){
-        valorNoCarrinho = valorNoCarrinho + (p.precosProdutos[itemAComprar-1]*unidades);
-        p.estoqueProdutos[itemAComprar-1] = p.estoqueProdutos[itemAComprar-1] - unidades;
+    public Double AddAoCarrinho(int itemAComprar, int unidades){
+        this.valorNoCarrinho = this.valorNoCarrinho + (this.precosProdutos.get(itemAComprar-1)*unidades);
+        int estoqueAtual = this.estoqueProdutos.get(itemAComprar-1);
+        int estoqueAtualizado = estoqueAtual - unidades;
+        this.estoqueProdutos.set(itemAComprar-1, estoqueAtualizado);
         return valorNoCarrinho;
     }
 
-    public  static boolean respotaContinuarComprando (int resposta) {
+    public  static boolean isRespostaValida (int resposta) {
         if (resposta == 2) {
             return true;
         } else if (resposta == 1) {

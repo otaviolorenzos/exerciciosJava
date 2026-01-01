@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class VersaoDois {
 
@@ -10,31 +11,36 @@ public class VersaoDois {
         boolean continuarComprando = true;
         while (continuarComprando) {
             int itemAComprar = 0;
-            boolean numValido = false;
+            boolean numValidoProduto = false;
             int unidades = 0;
-            while (!numValido) {
+            while (!numValidoProduto) {
                 p.ExibirInventario();
-                itemAComprar = Util.lerInteiroValido(sc, "Escolha qual item deseja comprar: [nº do item]: "); // analisa se é inteiro
-                numValido = p.AnalisarSeExisteP(itemAComprar); // analisa se esta fora do intervalo de produtos
+                itemAComprar = Util.lerInteiroValido(sc,
+                        "Escolha qual item deseja comprar: [nº do item]: "); // analisa se é inteiro
+                numValidoProduto = p.AnalisarSeExisteP(itemAComprar); // analisa se esta fora do intervalo de produtos
             }
-            while (numValido) {
-                System.out.println("Temos " + p.getEtoqueProdutos()[itemAComprar - 1] + " unidades disponiveis de " + p.getProdutos()[itemAComprar - 1]);
+            boolean numValidoEstoque = true;
+            while (numValidoEstoque) {
+                System.out.println("Temos " + p.getEstoqueIndividual(itemAComprar) +
+                        " unidades disponiveis de " +
+                        p.getNomeProdutoIndividual(itemAComprar));
                 unidades = Util.lerInteiroValido(sc, "Quantas unidades você gostaria?"); // analisa se é inteiro
-                numValido = p.VerificarEstoque(unidades, itemAComprar);
+                numValidoEstoque = p.VerificarEstoque(unidades, itemAComprar);
             }
-            p.AddAoCarrinho(itemAComprar, unidades, p);
-            System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, p.getProdutos()[itemAComprar - 1]));
+            p.AddAoCarrinho(itemAComprar, unidades);
+            System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, p.getNomeProdutoIndividual(itemAComprar)));
             System.out.println("Valor total: R$" + p.getValorNoCarrinho());
 
+            boolean numValidoResposta = false;
             int resposta = 0;
-            while (!numValido) {
+            while (!numValidoResposta) {
                 resposta = Util.lerInteiroValido(sc, "Deseja continuar comprando? [1-SIM /2-Não]");
-                numValido = Produtos.respotaContinuarComprando(resposta);
+                numValidoResposta = Produtos.isRespostaValida(resposta);
                 if (resposta == 2) {
                     continuarComprando = false;
-                    numValido = true;
+                    numValidoResposta = true;
                 } else if (resposta == 1) {
-                    numValido = true;
+                    numValidoResposta = true;
                 }
             }
         }
