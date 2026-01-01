@@ -1,12 +1,36 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
-public class VersaoDois {
+public class Aplicacao {
 
     public  static void main(String[] args) {
         System.out.println("Bem-Vindo(a) a OLS Sistemas");
-        Produtos p = new Produtos();
         Scanner sc = new Scanner(System.in);
+        Produtos p = new Produtos();
+
+        int usuario = Util.lerInteiroValido (sc, "Deseja entrar como [1] Administrador ou [2] Cliente? ");
+        if (usuario == 1) {
+            boolean continuarCadastrando = true;
+            while (continuarCadastrando) {
+                System.out.println("Vamos cadastrar um novo produto!");
+                String nomeDoProduto = Util.lerStringValida(sc, "Qual o nome do Produto? ");
+                Double precoDoProduto = Util.lerDoubleValido(sc, "Qual o preço para o Produto? ");
+                int estoqueDoProduto = Util.lerInteiroValido(sc, "Qual a quantidade do Produto disponível? ");
+                p.cadastrarNovoProduto(nomeDoProduto, precoDoProduto, estoqueDoProduto);
+                boolean numValidoContinuarCadastrando = false;
+                int resposta = 0;
+                while (!numValidoContinuarCadastrando) {
+                    resposta = Util.lerInteiroValido(sc, "Deseja cadastrar mais Produtos? [1-SIM /2-Não]");
+                    numValidoContinuarCadastrando = Produtos.isRespostaValida(resposta);
+                    if (resposta == 2) {
+                        continuarCadastrando = false;
+                        numValidoContinuarCadastrando = true;
+                    } else if (resposta == 1) {
+                        numValidoContinuarCadastrando = true;
+                    }
+                }
+            }
+        }
+
 
         boolean continuarComprando = true;
         while (continuarComprando) {

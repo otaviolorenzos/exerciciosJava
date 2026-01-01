@@ -122,6 +122,11 @@ public class Produtos {
         } return true;
     }
 
-
+    public void cadastrarNovoProduto (String nome, Double preco, int estoque){
+        this.produtos.add(nome);
+        this.precosProdutos.add(preco);
+        this.estoqueProdutos.add(estoque);
+        System.out.println("✅ Produto " + nome + " cadastrado com sucesso!");
+    }
 
 }
