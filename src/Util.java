@@ -16,7 +16,7 @@ public class Util {
                 sc.nextLine();
             }
         }
-        sc.nextLine();
+        sc.nextLine(); // Bug do Buffer
         return numeroLido;
     }
 

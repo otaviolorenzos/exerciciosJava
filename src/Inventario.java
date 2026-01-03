@@ -1,78 +1,56 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Produtos {
-    private ArrayList<String> produtos = new ArrayList<>(); // uma lista que não tem tamanho fixo
-    private ArrayList<Double> precosProdutos = new ArrayList<>();
-    private ArrayList<Integer> estoqueProdutos = new ArrayList<>();
+public class Inventario {
+    private ArrayList<Produto> listaDeProdutos = new ArrayList<>(); // Uma única lista que guarda objetos do tipo Produto
     private Double valorNoCarrinho = 0.0;
 
-    public Produtos () {
-        this.produtos.add("Mouse");
-        this.precosProdutos.add(29.9);
-        this.estoqueProdutos.add(5);
-
-        this.produtos.add("Teclado");
-        this.precosProdutos.add(79.5);
-        this.estoqueProdutos.add(7);
-
-        this.produtos.add("Monitor");
-        this.precosProdutos.add(899.2);
-        this.estoqueProdutos.add(9);
-
-        this.produtos.add("Webcam");
-        this.precosProdutos.add(137.45);
-        this.estoqueProdutos.add(4);
-
-        this.produtos.add("Headset");
-        this.precosProdutos.add(119.9);
-        this.estoqueProdutos.add(8);
+    public Inventario() {
+        // Criamos o objeto e já guardamos na lista
+        this.listaDeProdutos.add(new Produto("Mouse", 29.9, 5));
+        this.listaDeProdutos.add(new Produto("Teclado", 79.5, 7));
+        this.listaDeProdutos.add(new Produto("Monitor", 899.2, 9));
+        this.listaDeProdutos.add(new Produto("Webcam", 137.45, 4));
+        this.listaDeProdutos.add(new Produto("Headset", 119.9, 8));
 
     }
-
+    //getters
     public double getValorNoCarrinho() {
         return this.valorNoCarrinho;
     }
-    public ArrayList<Integer> getEtoqueProdutos() {
-        return this.estoqueProdutos;
+
+    public String getNomeDoProdutoNoIndice(int indice) {
+        return listaDeProdutos.get(indice - 1).getNome();
     }
 
-    public ArrayList<Double> getPrecosProdutos() {
-        return this.precosProdutos;
+    public int getEstoqueDoProdutoNoIndice(int indice) {
+        return listaDeProdutos.get(indice - 1).getEstoqueDisponivel();
     }
-
-    public String getNomeProdutoIndividual(int indice) {
-        return this.produtos.get(indice - 1);
-    }
-
-
-    public int getEstoqueIndividual(int indice) {
-        return this.estoqueProdutos.get(indice - 1);
-    }
-
 
     public void ExibirInventario() {
         System.out.println("------------- PRODUTOS -------------");
-        for (int i = 0; i < produtos.size(); i++) {
+
+        for (int i = 0; i < listaDeProdutos.size(); i++) {
+            Produto p = listaDeProdutos.get(i); // pegamos o objeto Produto em i dentro da lista de objetos Produto
+            // p serve para não "buscar" varias vezes para todos os atributos. Buscamos apenas uma vez (váriavel de referência)
             System.out.println(String.format("[%d] %s: R$%.2f (Estoque: %d)",
                     i + 1,
-                    produtos.get(i),
-                    precosProdutos.get(i),
-                    estoqueProdutos.get(i)));
+                    p.getNome(),
+                    p.getPreco(),
+                    p.getEstoqueDisponivel()));
         }
         System.out.println("------------- PRODUTOS -------------");
     }
 
     public boolean AnalisarSeExisteP(int itemAComprar){  //Analisa de está fora do intervalo de produtos
-        if (itemAComprar <= 0 || itemAComprar > produtos.size()) {
+        if (itemAComprar <= 0 || itemAComprar > listaDeProdutos.size()) {
             System.out.println("Número Inválido, tente novamente.");
             return false;
         } return true;
     }
 
     public boolean VerificarEstoque(int unidades, int itemAComprar){
-        if (unidades > estoqueProdutos.get(itemAComprar-1)){
+        Produto p = listaDeProdutos.get(itemAComprar-1);
+        if (unidades > p.getEstoqueDisponivel()){
             System.out.println("Estoque indisponível para quantidade desejada, tente novamente.");
             return true;
         } else if (unidades <= 0){
@@ -83,10 +61,9 @@ public class Produtos {
     }
 
     public Double AddAoCarrinho(int itemAComprar, int unidades){
-        this.valorNoCarrinho = this.valorNoCarrinho + (this.precosProdutos.get(itemAComprar-1)*unidades);
-        int estoqueAtual = this.estoqueProdutos.get(itemAComprar-1);
-        int estoqueAtualizado = estoqueAtual - unidades;
-        this.estoqueProdutos.set(itemAComprar-1, estoqueAtualizado);
+        Produto p = listaDeProdutos.get(itemAComprar-1);
+        this.valorNoCarrinho = this.valorNoCarrinho + (p.getPreco()*unidades);
+        int estoqueAtual = p.getEstoqueDisponivel() - unidades;
         return valorNoCarrinho;
     }
 
@@ -123,10 +100,9 @@ public class Produtos {
     }
 
     public void cadastrarNovoProduto (String nome, Double preco, int estoque){
-        this.produtos.add(nome);
-        this.precosProdutos.add(preco);
-        this.estoqueProdutos.add(estoque);
-        System.out.println("✅ Produto " + nome + " cadastrado com sucesso!");
+        Produto novo = new Produto(nome, preco, estoque);
+        this.listaDeProdutos.add(novo);
+        System.out.println("✅ " + nome + " cadastrado com sucesso!");
     }
 
 }

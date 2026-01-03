@@ -5,7 +5,7 @@ public class Aplicacao {
     public  static void main(String[] args) {
         System.out.println("Bem-Vindo(a) a OLS Sistemas");
         Scanner sc = new Scanner(System.in);
-        Produtos p = new Produtos();
+        Inventario i = new Inventario();
 
         int usuario = Util.lerInteiroValido (sc, "Deseja entrar como [1] Administrador ou [2] Cliente? ");
         if (usuario == 1) {
@@ -15,12 +15,12 @@ public class Aplicacao {
                 String nomeDoProduto = Util.lerStringValida(sc, "Qual o nome do Produto? ");
                 Double precoDoProduto = Util.lerDoubleValido(sc, "Qual o preço para o Produto? ");
                 int estoqueDoProduto = Util.lerInteiroValido(sc, "Qual a quantidade do Produto disponível? ");
-                p.cadastrarNovoProduto(nomeDoProduto, precoDoProduto, estoqueDoProduto);
+                i.cadastrarNovoProduto(nomeDoProduto, precoDoProduto, estoqueDoProduto);
                 boolean numValidoContinuarCadastrando = false;
                 int resposta = 0;
                 while (!numValidoContinuarCadastrando) {
                     resposta = Util.lerInteiroValido(sc, "Deseja cadastrar mais Produtos? [1-SIM /2-Não]");
-                    numValidoContinuarCadastrando = Produtos.isRespostaValida(resposta);
+                    numValidoContinuarCadastrando = Inventario.isRespostaValida(resposta);
                     if (resposta == 2) {
                         continuarCadastrando = false;
                         numValidoContinuarCadastrando = true;
@@ -38,28 +38,28 @@ public class Aplicacao {
             boolean numValidoProduto = false;
             int unidades = 0;
             while (!numValidoProduto) {
-                p.ExibirInventario();
+                i.ExibirInventario();
                 itemAComprar = Util.lerInteiroValido(sc,
                         "Escolha qual item deseja comprar: [nº do item]: "); // analisa se é inteiro
-                numValidoProduto = p.AnalisarSeExisteP(itemAComprar); // analisa se esta fora do intervalo de produtos
+                numValidoProduto = i.AnalisarSeExisteP(itemAComprar); // analisa se esta fora do intervalo de produtos
             }
             boolean numValidoEstoque = true;
             while (numValidoEstoque) {
-                System.out.println("Temos " + p.getEstoqueIndividual(itemAComprar) +
+                System.out.println("Temos " + i.getEstoqueDoProdutoNoIndice(itemAComprar) +
                         " unidades disponiveis de " +
-                        p.getNomeProdutoIndividual(itemAComprar));
+                        i.getNomeDoProdutoNoIndice(itemAComprar));
                 unidades = Util.lerInteiroValido(sc, "Quantas unidades você gostaria?"); // analisa se é inteiro
-                numValidoEstoque = p.VerificarEstoque(unidades, itemAComprar);
+                numValidoEstoque = i.VerificarEstoque(unidades, itemAComprar);
             }
-            p.AddAoCarrinho(itemAComprar, unidades);
-            System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, p.getNomeProdutoIndividual(itemAComprar)));
-            System.out.println("Valor total: R$" + p.getValorNoCarrinho());
+            i.AddAoCarrinho(itemAComprar, unidades);
+            System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, i.getNomeDoProdutoNoIndice(itemAComprar)));
+            System.out.println("Valor total: R$" + i.getValorNoCarrinho());
 
             boolean numValidoResposta = false;
             int resposta = 0;
             while (!numValidoResposta) {
                 resposta = Util.lerInteiroValido(sc, "Deseja continuar comprando? [1-SIM /2-Não]");
-                numValidoResposta = Produtos.isRespostaValida(resposta);
+                numValidoResposta = Inventario.isRespostaValida(resposta);
                 if (resposta == 2) {
                     continuarComprando = false;
                     numValidoResposta = true;
@@ -76,12 +76,12 @@ public class Aplicacao {
                 System.out.println("[2] - CRÉDITO");
                 System.out.println("[3] - BOLETO >> 5% de Acréscimo");
                 opcao = Util.lerInteiroValido(sc, "Escolha um nº entre []: ");
-                pago = p.avaliarQualPagamento(opcao);
+                pago = i.avaliarQualPagamento(opcao);
             }
-                double carrinhoInicial = p.getValorNoCarrinho();
-                double carrinhoAlterado = p.calcularPagamento(opcao, p.getValorNoCarrinho());
-                System.out.println("Valor do carrinho: R$" + p.getValorNoCarrinho());
-                System.out.println("Total com a alteração escolhida aplicada: R$" + carrinhoAlterado);
+                double carrinhoInicial = i.getValorNoCarrinho();
+                double carrinhoAlterado = i.calcularPagamento(opcao, i.getValorNoCarrinho());
+                System.out.println("Valor do carrinho: R$" + i.getValorNoCarrinho());
+                System.out.println("Total com a alteração escolhida aplicada: R$"+ carrinhoAlterado);
                 pago = true;
             System.out.println("Você receberá um e-mail com as instruções de pagamento.");
             System.out.println("Muito obrigado por comprar na OLS Sistemas!");
