@@ -12,10 +12,13 @@ public class Aplicacao {
             boolean continuarCadastrando = true;
             while (continuarCadastrando) {
                 System.out.println("Vamos cadastrar um novo produto!");
+                System.out.println("Qual tipo de produto deseja cadastrar?");
+                System.out.println("[1] Comum | [2] Importado | [3] Promoção");
+                int tipo = Util.lerInteiroValido(sc, "Escolha uma opção: ");
                 String nomeDoProduto = Util.lerStringValida(sc, "Qual o nome do Produto? ");
                 Double precoDoProduto = Util.lerDoubleValido(sc, "Qual o preço para o Produto? ");
                 int estoqueDoProduto = Util.lerInteiroValido(sc, "Qual a quantidade do Produto disponível? ");
-                i.cadastrarNovoProduto(nomeDoProduto, precoDoProduto, estoqueDoProduto);
+                i.cadastrarNovoProduto(nomeDoProduto, precoDoProduto, estoqueDoProduto, tipo);
                 boolean numValidoContinuarCadastrando = false;
                 int resposta = 0;
                 while (!numValidoContinuarCadastrando) {

@@ -6,12 +6,13 @@ public class Inventario {
 
     public Inventario() {
         // Criamos o objeto e já guardamos na lista
-        this.listaDeProdutos.add(new Produto("Mouse", 29.9, 5));
-        this.listaDeProdutos.add(new Produto("Teclado", 79.5, 7));
-        this.listaDeProdutos.add(new Produto("Monitor", 899.2, 9));
-        this.listaDeProdutos.add(new Produto("Webcam", 137.45, 4));
-        this.listaDeProdutos.add(new Produto("Headset", 119.9, 8));
+        this.listaDeProdutos.add(new ProdutoComum("Mouse", 29.9, 5));
+        this.listaDeProdutos.add(new ProdutoComum("Teclado", 79.5, 7));
+        this.listaDeProdutos.add(new ProdutoComum("Monitor", 899.2, 9));
+        this.listaDeProdutos.add(new ProdutoComum("Webcam", 137.45, 4));
+        this.listaDeProdutos.add(new ProdutoComum("Headset", 119.9, 8));
         this.listaDeProdutos.add(new ProdutoImportado("Mousepad RGB", 119.9, 15));
+        this.listaDeProdutos.add(new ProdutoPromocao("Teclado RGB", 9.9, 5));
 
     }
     //getters
@@ -100,10 +101,22 @@ public class Inventario {
         } return true;
     }
 
-    public void cadastrarNovoProduto (String nome, Double preco, int estoque){
-        Produto novo = new Produto(nome, preco, estoque);
-        this.listaDeProdutos.add(novo);
-        System.out.println("✅ " + nome + " cadastrado com sucesso!");
+
+    public void cadastrarNovoProduto(String nome, double preco, int estoque, int tipo) {
+            Produto novo; // Criamos uma referência do tipo pai
+
+            if (tipo == 2) {
+                novo = new ProdutoImportado(nome, preco, estoque);
+            } else if (tipo == 3) {
+                novo = new ProdutoPromocao(nome, preco, estoque);
+            } else {
+                // Agora você precisará da classe ProdutoComum para os itens normais
+                novo = new ProdutoComum(nome, preco, estoque);
+            }
+
+            this.listaDeProdutos.add(novo);
+            System.out.println("✅ " + nome + " cadastrado como " + novo.getClass().getSimpleName());
     }
+
 
 }

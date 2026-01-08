@@ -3,8 +3,10 @@ public class ProdutoImportado extends Produto { // herança
         super(nome, preco, estoque); // Envia os dados para o construtor do Pai
     }
 
-    public double getPrecoComTaxa() {
-        // Usamos o getPreco() que já existe no pai e somamos 15%
-        return getPreco() * 1.15;
+    @Override // Isso avisa ao compilador que você está mudando uma regra do pai
+    public Double getPreco() {
+        // super.getPreco() chama o preço original do pai
+        // depois multiplicamos por 1.15 (15% de taxa)
+        return super.getPreco() * 1.15;
     }
 }
