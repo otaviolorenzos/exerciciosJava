@@ -11,6 +11,7 @@ public class Inventario {
         this.listaDeProdutos.add(new Produto("Monitor", 899.2, 9));
         this.listaDeProdutos.add(new Produto("Webcam", 137.45, 4));
         this.listaDeProdutos.add(new Produto("Headset", 119.9, 8));
+        this.listaDeProdutos.add(new ProdutoImportado("Mousepad RGB", 119.9, 15));
 
     }
     //getters

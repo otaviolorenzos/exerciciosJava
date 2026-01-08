@@ -1,7 +1,7 @@
 public class Produto {
-    private String nome;
-    private Double preco;
-    private int estoqueDisponivel;
+    protected String nome;
+    protected Double preco;
+    protected int estoqueDisponivel;
 
     public String getNome () {
         return this.nome;
@@ -20,5 +20,6 @@ public class Produto {
         this.preco = preco;
         this.estoqueDisponivel = estoque;
     }
+
 
 }
