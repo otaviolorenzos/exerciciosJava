@@ -13,6 +13,7 @@ public class Inventario {
         this.listaDeProdutos.add(new ProdutoComum("Headset", 119.9, 8));
         this.listaDeProdutos.add(new ProdutoImportado("Mousepad RGB", 119.9, 15));
         this.listaDeProdutos.add(new ProdutoPromocao("Teclado RGB", 9.9, 5));
+        this.listaDeProdutos.add(new ProdutoPromocao("Teclado RGB Black and White", 75, 32));
 
     }
     //getters
@@ -66,6 +67,7 @@ public class Inventario {
         Produto p = listaDeProdutos.get(itemAComprar-1);
         this.valorNoCarrinho = this.valorNoCarrinho + (p.getPreco()*unidades);
         int estoqueAtual = p.getEstoqueDisponivel() - unidades;
+        p.setEstoqueDisponivel(estoqueAtual);
         return valorNoCarrinho;
     }
 
@@ -116,6 +118,18 @@ public class Inventario {
 
             this.listaDeProdutos.add(novo);
             System.out.println("✅ " + nome + " cadastrado como " + novo.getClass().getSimpleName());
+    }
+
+    public void aplicarDescontoEspecial(int indice, double porcentagem) {
+        Produto p = listaDeProdutos.get(indice - 1);
+
+
+        if (p instanceof Promocional) {
+            ((Promocional) p).aplicarCupom(porcentagem);
+            System.out.println("Cupom aplicado com sucesso!");
+        } else {
+            System.out.println("Este produto não aceita cupons de desconto.");
+        }
     }
 
 

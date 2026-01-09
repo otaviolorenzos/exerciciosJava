@@ -9,28 +9,38 @@ public class Aplicacao {
 
         int usuario = Util.lerInteiroValido (sc, "Deseja entrar como [1] Administrador ou [2] Cliente? ");
         if (usuario == 1) {
-            boolean continuarCadastrando = true;
-            while (continuarCadastrando) {
-                System.out.println("Vamos cadastrar um novo produto!");
-                System.out.println("Qual tipo de produto deseja cadastrar?");
-                System.out.println("[1] Comum | [2] Importado | [3] Promoção");
-                int tipo = Util.lerInteiroValido(sc, "Escolha uma opção: ");
-                String nomeDoProduto = Util.lerStringValida(sc, "Qual o nome do Produto? ");
-                Double precoDoProduto = Util.lerDoubleValido(sc, "Qual o preço para o Produto? ");
-                int estoqueDoProduto = Util.lerInteiroValido(sc, "Qual a quantidade do Produto disponível? ");
-                i.cadastrarNovoProduto(nomeDoProduto, precoDoProduto, estoqueDoProduto, tipo);
-                boolean numValidoContinuarCadastrando = false;
-                int resposta = 0;
-                while (!numValidoContinuarCadastrando) {
-                    resposta = Util.lerInteiroValido(sc, "Deseja cadastrar mais Produtos? [1-SIM /2-Não]");
-                    numValidoContinuarCadastrando = Inventario.isRespostaValida(resposta);
-                    if (resposta == 2) {
-                        continuarCadastrando = false;
-                        numValidoContinuarCadastrando = true;
-                    } else if (resposta == 1) {
-                        numValidoContinuarCadastrando = true;
+            System.out.println("O que deseja fazer? ");
+            System.out.println("[1] Cadastrar novo produto | [2] Aplicar cupom de Desconto em produto existente");
+            int oqueFazer = Util.lerInteiroValido(sc, "Escolha uma opção: ");
+            if (oqueFazer == 1) {
+                boolean continuarCadastrando = true;
+                while (continuarCadastrando) {
+                    System.out.println("Vamos cadastrar um novo produto!");
+                    System.out.println("Qual tipo de produto deseja cadastrar?");
+                    System.out.println("[1] Comum | [2] Importado | [3] Promoção");
+                    int tipo = Util.lerInteiroValido(sc, "Escolha uma opção: ");
+                    String nomeDoProduto = Util.lerStringValida(sc, "Qual o nome do Produto? ");
+                    Double precoDoProduto = Util.lerDoubleValido(sc, "Qual o preço para o Produto? ");
+                    int estoqueDoProduto = Util.lerInteiroValido(sc, "Qual a quantidade do Produto disponível? ");
+                    i.cadastrarNovoProduto(nomeDoProduto, precoDoProduto, estoqueDoProduto, tipo);
+                    boolean numValidoContinuarCadastrando = false;
+                    int resposta = 0;
+                    while (!numValidoContinuarCadastrando) {
+                        resposta = Util.lerInteiroValido(sc, "Deseja cadastrar mais Produtos? [1-SIM /2-Não]");
+                        numValidoContinuarCadastrando = Inventario.isRespostaValida(resposta);
+                        if (resposta == 2) {
+                            continuarCadastrando = false;
+                            numValidoContinuarCadastrando = true;
+                        } else if (resposta == 1) {
+                            numValidoContinuarCadastrando = true;
+                        }
                     }
                 }
+            } else if (oqueFazer == 2) {
+                i.ExibirInventario();
+                int indice = Util.lerInteiroValido(sc, "Em qual dos produtos você gostaria de incluir um cupom de desconto? ");
+                double porcentagem = Util.lerDoubleValido(sc, "Qual a porcentagem de desconto do Cupom? ");
+                i.aplicarDescontoEspecial(indice, porcentagem);
             }
         }
 

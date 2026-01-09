@@ -15,6 +15,10 @@ public abstract class Produto {
         return this.estoqueDisponivel;
     }
 
+    public void setEstoqueDisponivel(int estoqueDisponivel) {
+        this.estoqueDisponivel = estoqueDisponivel;
+    }
+
     public Produto(String nome, double preco, int estoque) {
         this.nome = nome;
         this.preco = preco;
