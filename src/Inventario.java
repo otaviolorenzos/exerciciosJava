@@ -51,16 +51,16 @@ public class Inventario {
         } return true;
     }
 
-    public boolean VerificarEstoque(int unidades, int itemAComprar){
-        Produto p = listaDeProdutos.get(itemAComprar-1);
-        if (unidades > p.getEstoqueDisponivel()){
-            System.out.println("Estoque indisponível para quantidade desejada, tente novamente.");
-            return true;
-        } else if (unidades <= 0){
-            System.out.println("Número inválido, tente novamente.");
-            return true;
+    public void verificarEstoque(int unidades, int itemAComprar) throws EstoqueInsuficienteException {
+        Produto p = listaDeProdutos.get(itemAComprar - 1);
+
+        if (unidades > p.getEstoqueDisponivel()) {
+            // Em vez de println, "explodimos" um erro específico
+            throw new EstoqueInsuficienteException("Estoque insuficiente! O item " + p.getNome() + " só possui " + p.getEstoqueDisponivel() + " unidades.");
         }
-        return false;
+        if (unidades <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que zero."); // valor inaceitável
+        }
     }
 
     public Double AddAoCarrinho(int itemAComprar, int unidades){

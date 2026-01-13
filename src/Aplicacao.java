@@ -56,13 +56,19 @@ public class Aplicacao {
                         "Escolha qual item deseja comprar: [nº do item]: "); // analisa se é inteiro
                 numValidoProduto = i.AnalisarSeExisteP(itemAComprar); // analisa se esta fora do intervalo de produtos
             }
-            boolean numValidoEstoque = true;
-            while (numValidoEstoque) {
-                System.out.println("Temos " + i.getEstoqueDoProdutoNoIndice(itemAComprar) +
-                        " unidades disponiveis de " +
-                        i.getNomeDoProdutoNoIndice(itemAComprar));
-                unidades = Util.lerInteiroValido(sc, "Quantas unidades você gostaria?"); // analisa se é inteiro
-                numValidoEstoque = i.VerificarEstoque(unidades, itemAComprar);
+            boolean numValidoEstoque = false;
+            while (!numValidoEstoque) {
+                try {
+                    System.out.println("Temos " + i.getEstoqueDoProdutoNoIndice(itemAComprar) +
+                            " unidades disponiveis de " +
+                            i.getNomeDoProdutoNoIndice(itemAComprar));
+                    unidades = Util.lerInteiroValido(sc, "Quantas unidades você gostaria?"); // analisa se é inteiro
+                    i.verificarEstoque(unidades, itemAComprar);
+                    numValidoEstoque = true;
+                } catch (EstoqueInsuficienteException e) {
+                    System.out.println("⚠️ ATENÇÃO: " + e.getMessage());
+                    System.out.println("Tente uma quantidade menor.");
+                }
             }
             i.AddAoCarrinho(itemAComprar, unidades);
             System.out.println(String.format("Adicionamos %d unidades de %s ao seu carrinho.", unidades, i.getNomeDoProdutoNoIndice(itemAComprar)));
